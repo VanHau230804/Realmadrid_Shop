@@ -48,7 +48,9 @@ const Shopkit = () => {
   return (
     <section className="relative">
       <h1 className=" text-slate-600 text-center text-7xl py-8 font-semibold ">
-        <span>SHOP KITS</span>
+        <Link to={'/kits'} className="hover:text-slate-600">
+          SHOP KITS
+        </Link>
       </h1>
 
       <div className="flex flex-wrap justify-center gap-4 bg-gray-600 h-auto py-14  ">

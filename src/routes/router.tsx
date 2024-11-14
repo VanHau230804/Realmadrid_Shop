@@ -5,6 +5,8 @@ import NotFoundPage from '../pages/client/404/NotFoundPage';
 import PageToTopUtils from '../helpers/PageToTopUtils';
 import HomePage from '../pages/client/home/HomePage';
 import KitPage from '../pages/client/Kits/KitPage';
+import HomePlayer from '../pages/client/shopbyplayer/PlayerPage';
+import News from '../pages/client/home/components/news';
 export interface IRouter {
   path: string;
   element: () => JSX.Element;
@@ -21,6 +23,16 @@ const clientRouter: IRouter[] = [
     path: '/kits',
     element: KitPage,
     title: 'KitPage',
+  },
+  {
+    path: '/players',
+    element: HomePlayer,
+    title: 'KitPage',
+  },
+  {
+    path: '/news',
+    element: News,
+    title: 'NewsPage',
   },
 ];
 

@@ -35,11 +35,11 @@ const Navbar: React.FC = () => {
           <Link to="/kits" className="relative group">
             <span>Kits</span>
           </Link>
-          <Link to="" className="relative group">
+          <Link to="/players" className="relative group">
             <span>Shop By Player</span>
           </Link>
-          <Link to="" className="relative group">
-            <span>Training</span>
+          <Link to="/news" className="relative group">
+            <span>News</span>
           </Link>
           <Link to="" className="relative group">
             <span>Fashion</span>
