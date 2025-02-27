@@ -1,12 +1,16 @@
-import { useEffect } from 'react';
-import { Route, Routes, useLocation } from 'react-router-dom';
-import MainLayout from '../layouts/mainLayout';
-import NotFoundPage from '../pages/client/404/NotFoundPage';
-import PageToTopUtils from '../helpers/PageToTopUtils';
-import HomePage from '../pages/client/home/HomePage';
-import KitPage from '../pages/client/Kits/KitPage';
-import HomePlayer from '../pages/client/shopbyplayer/PlayerPage';
-import News from '../pages/client/home/components/news';
+import { useEffect } from "react";
+import { Route, Routes, useLocation } from "react-router-dom";
+import MainLayout from "../layouts/mainLayout";
+import NotFoundPage from "../pages/client/404/NotFoundPage";
+import PageToTopUtils from "../helpers/PageToTopUtils";
+import HomePage from "../pages/client/home/HomePage";
+import KitPage from "../pages/client/Kits/KitPage";
+import HomePlayer from "../pages/client/shopbyplayer/PlayerPage";
+import KitDetail from "../pages/client/Kits/component/KitDetail";
+import LoginPage from "../pages/client/auth/LoginPage";
+import RegisterPage from "../pages/client/auth/RegisterPage";
+import ShoppingCart from "../pages/client/shoppingcart/ShoppingCart";
+import News from "../pages/client/news/News";
 export interface IRouter {
   path: string;
   element: () => JSX.Element;
@@ -15,24 +19,47 @@ export interface IRouter {
 
 const clientRouter: IRouter[] = [
   {
-    path: '/',
+    path: "/",
     element: HomePage,
-    title: 'HomePage',
+    title: "HomePage",
   },
   {
-    path: '/kits',
+    path: "/kits",
     element: KitPage,
-    title: 'KitPage',
+    title: "KitPage",
   },
   {
-    path: '/players',
+    path: "/kitdetail",
+    element: KitDetail,
+    title: "KitDetail",
+  },
+  {
+    path: "/players",
     element: HomePlayer,
-    title: 'KitPage',
+    title: "PlayerPage",
   },
   {
-    path: '/news',
+    path: "/news",
     element: News,
-    title: 'NewsPage',
+    title: "NewsPage",
+  },
+  {
+    path: "/shoppingcart",
+    element: ShoppingCart,
+    title: "ShoppingCart",
+  },
+];
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const authRouter: IRouter[] = [
+  {
+    path: "/login",
+    element: <LoginPage />,
+    title: "Đăng nhập tài khoản",
+  },
+  {
+    path: "/register",
+    element: <RegisterPage />,
+    title: "Đăng ký tài khoản",
   },
 ];
 
@@ -41,8 +68,8 @@ export default function AppRouter() {
 
   // hàm xử lý hiển thị document title
   useEffect(() => {
-    const route = clientRouter.find(route => {
-      const routePath = route.path.replace(/:\w+/g, '');
+    const route = clientRouter.find((route) => {
+      const routePath = route.path.replace(/:\w+/g, "");
       return location.pathname.startsWith(routePath);
     });
     if (route && route.title) {
@@ -56,7 +83,7 @@ export default function AppRouter() {
       <Routes>
         <Route element={<MainLayout />}>
           {clientRouter.length > 0 &&
-            clientRouter.map(route => (
+            clientRouter.map((route) => (
               <Route
                 key={route.path}
                 path={route.path}
@@ -65,6 +92,8 @@ export default function AppRouter() {
             ))}
         </Route>
         <Route path="*" element={<NotFoundPage />}></Route>
+        <Route path="/login" element={<LoginPage />}></Route>
+        <Route path="/register" element={<RegisterPage />}></Route>
       </Routes>
     </>
   );

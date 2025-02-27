@@ -6,19 +6,34 @@
 .bg-header {
   background-image: linear-gradient(180deg, #8760f6 0%, #3e31fa 100%);
 }
+
 .grid-header {
-  display: grid; /* Kích hoạt grid layout */
-  grid-template-columns: 1fr 1.5fr 1fr; /* Định nghĩa tỷ lệ các cột */
-  gap: 1.5rem; /* Tùy chọn: Khoảng cách giữa các phần tử */
-  height: auto; /* Thêm thuộc tính height để giới hạn chiều cao của grid */
-  align-items: center; /* Canh giữa các phần tử theo chiều dọc */
+  display: grid;
+  /* Kích hoạt grid layout */
+  grid-template-columns: 1fr 1.5fr 1fr;
+  /* Định nghĩa tỷ lệ các cột */
+  gap: 1.5rem;
+  /* Tùy chọn: Khoảng cách giữa các phần tử */
+  height: auto;
+  /* Thêm thuộc tính height để giới hạn chiều cao của grid */
+  align-items: center;
+  /* Canh giữa các phần tử theo chiều dọc */
 }
+
 .bg-kit {
   background-image: url('https://madridistareal.com/wp-content/uploads/2024/06/IMG_0602.jpeg');
 }
+
+@layer utilities {
+  .no-space-x> :not([hidden])~ :not([hidden]) {
+    margin-left: 0 !important;
+  }
+}
+
 .container-page {
   @apply w-full max-w-[90%] mx-auto px-5;
 }
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
@@ -28,9 +43,11 @@
   a:hover {
     color: #747bff;
   }
+
   .legendary {
     color: rgb(62 49 250);
   }
+
   button {
     background-color: #f9f9f9;
   }
