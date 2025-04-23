@@ -1,5 +1,9 @@
-export { default as ArrowForwardsIcon } from "@mui/icons-material/ArrowForwardIos";
-export { default as PersonIcon } from "@mui/icons-material/Person";
-export { default as EmailIcon } from "@mui/icons-material/Email";
-export { default as CallIcon } from "@mui/icons-material/Call";
-export { default as LocationOnIcon } from "@mui/icons-material/LocationOn";
+export { default as ArrowForwardsIcon } from '@mui/icons-material/ArrowForwardIos';
+export { default as PersonIcon } from '@mui/icons-material/Person';
+export { default as EmailIcon } from '@mui/icons-material/Email';
+export { default as CallIcon } from '@mui/icons-material/Call';
+export { default as LocationOnIcon } from '@mui/icons-material/LocationOn';
+export { default as SearchIcon } from '@mui/icons-material/Search';
+export { default as DashboardIcon } from '@mui/icons-material/Dashboard';
+export { default as SettingsIcon } from '@mui/icons-material/Settings';
+export { default as NewpaperIcon } from '@mui/icons-material/Newspaper';

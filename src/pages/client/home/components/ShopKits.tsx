@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 interface Product {
   id: string;
@@ -16,7 +15,7 @@ const products: Product[] = [
     price: '$125.00',
     imageUrl:
       'https://us.shop.realmadrid.com/_next/image?url=https%3A%2F%2Flegends.broadleafcloud.com%2Fapi%2Fasset%2Fcontent%2FRMCFYZ0063_01.jpg%3FcontextRequest%3D%257B%2522forceCatalogForFetch%2522%3Afalse%2C%2522forceFilterByCatalogIncludeInheritance%2522%3Afalse%2C%2522forceFilterByCatalogExcludeInheritance%2522%3Afalse%2C%2522applicationId%2522%3A%252201H4RD9NXMKQBQ1WVKM1181VD8%2522%2C%2522tenantId%2522%3A%2522REAL_MADRID%2522%257D&w=384&q=50', // Thay bằng URL thực tế
-    sizes: ['2XS', 'XS', 'S', 'M', 'L', 'XL', '2XL'],
+    sizes: ['2XS', 'XS', 'S', 'M', 'L', 'XL', '2XL']
   },
   {
     id: '2',
@@ -24,7 +23,7 @@ const products: Product[] = [
     price: '$90.00',
     imageUrl:
       'https://us.shop.realmadrid.com/_next/image?url=https%3A%2F%2Flegends.broadleafcloud.com%2Fapi%2Fasset%2Fcontent%2FRMCFYZ0067-01.jpg%3FcontextRequest%3D%257B%2522forceCatalogForFetch%2522%3Afalse%2C%2522forceFilterByCatalogIncludeInheritance%2522%3Afalse%2C%2522forceFilterByCatalogExcludeInheritance%2522%3Afalse%2C%2522applicationId%2522%3A%252201H4RD9NXMKQBQ1WVKM1181VD8%2522%2C%2522tenantId%2522%3A%2522REAL_MADRID%2522%257D&w=384&q=50',
-    sizes: ['2XS', 'XS', 'S', 'M', 'L', 'XL', '2XL'],
+    sizes: ['2XS', 'XS', 'S', 'M', 'L', 'XL', '2XL']
   },
   {
     id: ' 3',
@@ -32,7 +31,7 @@ const products: Product[] = [
     price: '$75.00',
     imageUrl:
       'https://us.shop.realmadrid.com/_next/image?url=https%3A%2F%2Flegends.broadleafcloud.com%2Fapi%2Fasset%2Fcontent%2FRMCFMZ0201-1.jpg%3FcontextRequest%3D%257B%2522forceCatalogForFetch%2522%3Afalse%2C%2522forceFilterByCatalogIncludeInheritance%2522%3Afalse%2C%2522forceFilterByCatalogExcludeInheritance%2522%3Afalse%2C%2522applicationId%2522%3A%252201H4RD9NXMKQBQ1WVKM1181VD8%2522%2C%2522tenantId%2522%3A%2522REAL_MADRID%2522%257D&w=384&q=50',
-    sizes: ['XS', 'S', 'M', 'L', 'XL'],
+    sizes: ['XS', 'S', 'M', 'L', 'XL']
   },
   {
     id: ' 4',
@@ -40,8 +39,8 @@ const products: Product[] = [
     price: '$70.00',
     imageUrl:
       'https://us.shop.realmadrid.com/_next/image?url=https%3A%2F%2Flegends.broadleafcloud.com%2Fapi%2Fasset%2Fcontent%2Frmcfmz0196-01.jpg%3FcontextRequest%3D%257B%2522forceCatalogForFetch%2522%3Afalse%2C%2522forceFilterByCatalogIncludeInheritance%2522%3Afalse%2C%2522forceFilterByCatalogExcludeInheritance%2522%3Afalse%2C%2522applicationId%2522%3A%252201H4RD9NXMKQBQ1WVKM1181VD8%2522%2C%2522tenantId%2522%3A%2522REAL_MADRID%2522%257D&w=384&q=50',
-    sizes: ['XS', 'S', 'M', 'L', 'XL'],
-  },
+    sizes: ['XS', 'S', 'M', 'L', 'XL']
+  }
 ];
 
 const Shopkit = () => {

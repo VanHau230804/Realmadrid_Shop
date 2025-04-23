@@ -1,5 +1,4 @@
-import { Link } from 'react-router-dom';
-
+// import { Link } from 'react-router-dom';
 const stats = [
   {
     icon: 'https://publish-p47754-e237306.adobeaemcloud.com/content/dam/common/statics/public-content/competition/football/SIGLOXX.app.svg?$Desktop$&wid=40&hei=40',

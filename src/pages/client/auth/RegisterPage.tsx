@@ -1,9 +1,9 @@
-import React from "react";
-import PosterAuth from "./components/PosterAuth";
+import React from 'react';
+import PosterAuth from './components/PosterAuth';
 
 const RegisterPage = ({
   onClose,
-  switchToLogin,
+  switchToLogin
 }: {
   onClose: () => void;
   switchToLogin: () => void;
@@ -91,7 +91,7 @@ const RegisterPage = ({
             </button>
           </form>
           <div className="text-sm text-center text-gray-600">
-            Already have an account?{" "}
+            Already have an account?{' '}
             <button
               onClick={switchToLogin}
               className="text-indigo-600 hover:text-indigo-500"
