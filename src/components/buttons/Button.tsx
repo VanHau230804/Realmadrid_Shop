@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 
 export interface ButtonProps {
   type: string;
@@ -12,7 +12,7 @@ const Button: React.FC<ButtonProps> = ({
   onClick = () => {},
   children,
   className = '',
-  disabled = false,
+  disabled = false
 }) => {
   return (
     <button

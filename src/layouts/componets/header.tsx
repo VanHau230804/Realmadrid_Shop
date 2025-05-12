@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { FiSearch, FiUser, FiShoppingCart } from 'react-icons/fi';
+import { FiUser, FiShoppingCart } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import LoginPage from '../../pages/client/auth/LoginPage';
 import RegisterPage from '../../pages/client/auth/RegisterPage';
-
+import InputSearch from '../../components/input/Search';
 const Header = () => {
   const [modalType, setModalType] = useState<'login' | 'register' | null>(null);
 
@@ -30,14 +30,7 @@ const Header = () => {
           </Link>
 
           {/* Search */}
-          <div className="flex items-center bg-gray-100 rounded-xl px-4 py-2 w-2/5 h-[50px]">
-            <FiSearch className="text-gray-500 mr-2 w-[30px] h-[35px]" />
-            <input
-              type="text"
-              placeholder="Search"
-              className="bg-transparent w-full focus:outline-none"
-            />
-          </div>
+          <InputSearch />
 
           {/* Icons & Language */}
           <div className="flex items-center space-x-4 text-gray-700 relative">

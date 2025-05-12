@@ -1,6 +1,6 @@
-import React from 'react';
 import PosterAuth from './components/PosterAuth';
-
+import Label from '../../../components/label/Label';
+import Input from '../../../components/input/Input';
 const RegisterPage = ({
   onClose,
   switchToLogin
@@ -14,7 +14,7 @@ const RegisterPage = ({
         <PosterAuth />
         <div className="w-[55%] p-8  bg-white rounded-r-2xl">
           <button
-            className="absolute top-4 right-4 text-red-600"
+            className="absolute top-4 right-4 text-indigo-600 bg-white rounded-full p-2 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             onClick={onClose}
           >
             ✕
@@ -24,63 +24,35 @@ const RegisterPage = ({
           </h2>
           <form className="">
             <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Email
-              </label>
-              <input
+              <Label htmlFor="email">Email</Label>
+              <Input
                 type="email"
-                id="email"
                 name="email"
                 className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                required
               />
             </div>
             <div>
-              <label
-                htmlFor="username"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Username
-              </label>
-              <input
+              <Label htmlFor="username">Username</Label>
+              <Input
                 type="username"
-                id="username"
                 name="username"
                 className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                required
               />
             </div>
             <div>
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Password
-              </label>
-              <input
+              <Label htmlFor="password">Password</Label>
+              <Input
                 type="password"
-                id="password"
                 name="password"
                 className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                required
               />
             </div>
             <div>
-              <label
-                htmlFor="confirm-password"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Confirm Password
-              </label>
-              <input
+              <Label htmlFor="confirm-password">Confirm Password</Label>
+              <Input
                 type="password"
-                id="confirm-password"
                 name="confirm-password"
                 className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                required
               />
             </div>
             <button
