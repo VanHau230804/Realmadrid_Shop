@@ -1,26 +1,29 @@
 import { emailRegex, passwordRegex } from '../../constants/regex';
 import * as yup from 'yup';
 const schema = yup.object({
-  username: yup.string().trim().required('Vui lòng nhập vào họ và tên !'),
+  username: yup
+    .string()
+    .trim()
+    .required('Please enter your last name and first name!'),
   email: yup
     .string()
     .trim()
-    .required('Trường này là bắt buộc !')
-    .matches(emailRegex, { message: 'Email không dúng định dạng !' }),
+    .required('This field is mandatory!')
+    .matches(emailRegex, { message: 'The email format is incorrect!' }),
   password: yup
     .string()
     .trim()
-    .required('Mật khẩu không được để trống !')
-    .min(8, 'Mật khẩu ít nhất 8 ký tự trở lên !')
+    .required('Password cannot be empty!')
+    .min(8, 'Password must be at least 8 characters long!')
     .matches(passwordRegex, {
-      message: 'Mật khẩu ít nhất 1 chữ cái'
+      message: 'Password must contain at least 1 letter.'
     }),
   password_confirm: yup
     .string()
     .trim()
     .oneOf(
       [yup.ref('password'), undefined],
-      'Mật khẩu xác nhận phải khớp với mật khẩu đã nhập !'
+      'The confirmation password must match the entered password'
     )
 });
 export default schema;

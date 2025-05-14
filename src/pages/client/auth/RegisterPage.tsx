@@ -21,8 +21,9 @@ const RegisterPage = ({ onClose, switchToLogin }: RegisterPageProps) => {
   });
   const handleRegister: SubmitHandler<IAccount> = async data => {
     try {
-      const { email, password, username } = data;
-      console.log('Register data:', { email, password, username });
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { password_confirm, ...dataRegister } = data;
+      console.log('Register data:', { ...dataRegister });
       // Call your register API here
     } catch (error) {
       console.error('Error during registration:', error);

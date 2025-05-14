@@ -8,7 +8,7 @@ const MessageForm = ({ error, className }: IMessageForm) => {
     <>
       {error && (
         <span
-          className={`text-xs ml-3 mt-2 block font-light text-red-500 ${className}`}
+          className={`text-xs ml-3 mt-2 block font-medium text-red-600 ${className}`}
         >
           {error}
         </span>
