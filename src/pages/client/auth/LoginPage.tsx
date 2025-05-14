@@ -2,13 +2,33 @@ import React from 'react';
 import PosterAuth from './components/PosterAuth';
 import Lable from '../../../components/label/Label';
 import Input from '../../../components/input/Input';
-const LoginPage = ({
-  onClose,
-  switchToRegister
-}: {
+import { SubmitHandler, useForm } from 'react-hook-form';
+import MessageForm from '../../../components/message';
+import schema from '../../../components/yup/schemaAuth';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { IAccount } from '../../../types/user.type';
+interface LoginPageProps {
   onClose: () => void;
   switchToRegister: () => void;
-}) => {
+}
+const LoginPage = ({ onClose, switchToRegister }: LoginPageProps) => {
+  const {
+    handleSubmit,
+    formState: { errors },
+    control
+  } = useForm({
+    resolver: yupResolver(schema),
+    mode: 'onChange'
+  });
+  const handleLogin: SubmitHandler<IAccount> = async data => {
+    try {
+      const { email, password } = data;
+      console.log('Login data:', { email, password });
+      // Call your login API here
+    } catch (error) {
+      console.error('Error during login:', error);
+    }
+  };
   return (
     <div className="min-h-screen flex items-center justify-center fixed inset-0 z-[101] cursor-pointer ">
       <div className="w-[40%] flex border shadow-md rounded-2xl bg-gray-200 relative">
@@ -23,14 +43,21 @@ const LoginPage = ({
           <h2 className="text-2xl font-bold text-center text-gray-900">
             Member Sign In
           </h2>
-          <form className="space-y-6">
+          <form className="space-y-6" onSubmit={handleSubmit(handleLogin)}>
             <div>
               <Lable htmlFor="email">Email</Lable>
-              <Input type="email" name="email" className="" />
+              <Input type="email" name="email" className="" control={control} />
+              <MessageForm error={errors.email?.message} />
             </div>
             <div>
               <Lable htmlFor="password">Password</Lable>
-              <Input type="password" name="password" className="" />
+              <Input
+                type="password"
+                name="password"
+                className=""
+                control={control}
+              />
+              <MessageForm error={errors.password?.message} />
             </div>
             <button
               type="submit"

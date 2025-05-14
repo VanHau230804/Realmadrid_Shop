@@ -1,13 +1,34 @@
 import PosterAuth from './components/PosterAuth';
 import Label from '../../../components/label/Label';
 import Input from '../../../components/input/Input';
-const RegisterPage = ({
-  onClose,
-  switchToLogin
-}: {
+import { SubmitHandler, useForm } from 'react-hook-form';
+import MessageForm from '../../../components/message';
+import schema from '../../../components/yup/schemaAuth';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { IAccount } from '../../../types/user.type';
+interface RegisterPageProps {
   onClose: () => void;
   switchToLogin: () => void;
-}) => {
+}
+const RegisterPage = ({ onClose, switchToLogin }: RegisterPageProps) => {
+  const {
+    handleSubmit,
+    formState: { errors },
+    control
+  } = useForm({
+    resolver: yupResolver(schema),
+    mode: 'onChange'
+  });
+  const handleRegister: SubmitHandler<IAccount> = async data => {
+    try {
+      const { email, password, username } = data;
+      console.log('Register data:', { email, password, username });
+      // Call your register API here
+    } catch (error) {
+      console.error('Error during registration:', error);
+    }
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center fixed inset-0 z-[101] cursor-pointer ">
       <div className="w-[40%] flex border shadow-md rounded-2xl bg-gray-200 relative">
@@ -22,14 +43,16 @@ const RegisterPage = ({
           <h2 className="text-2xl font-bold text-center text-gray-900">
             Create an Account
           </h2>
-          <form className="">
+          <form className="" onSubmit={handleSubmit(handleRegister)}>
             <div>
               <Label htmlFor="email">Email</Label>
               <Input
                 type="email"
                 name="email"
                 className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                control={control}
               />
+              <MessageForm error={errors.email?.message} />
             </div>
             <div>
               <Label htmlFor="username">Username</Label>
@@ -37,23 +60,29 @@ const RegisterPage = ({
                 type="username"
                 name="username"
                 className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                control={control}
               />
+              <MessageForm error={errors.username?.message} />
             </div>
             <div>
               <Label htmlFor="password">Password</Label>
               <Input
                 type="password"
-                name="password"
                 className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                name="password"
+                control={control}
               />
+              <MessageForm error={errors.password?.message} />
             </div>
             <div>
               <Label htmlFor="confirm-password">Confirm Password</Label>
               <Input
                 type="password"
-                name="confirm-password"
+                name="password_confirm"
                 className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                control={control}
               />
+              <MessageForm error={errors.password_confirm?.message} />
             </div>
             <button
               type="submit"
