@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import { FiUser, FiShoppingCart } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import LoginPage from '../../pages/client/auth/LoginPage';
 import RegisterPage from '../../pages/client/auth/RegisterPage';
 import InputSearch from '../../components/input/Search';
+import { logoutAuth } from '../../redux/auth/authSlice';
+import { RootState } from '../../redux/store';
 const Header = () => {
   const [modalType, setModalType] = useState<'login' | 'register' | null>(null);
-
+  const auth = useSelector((state: RootState) => state.auth.data);
+  const dispatch = useDispatch();
   return (
     <>
       <header className="relative w-full block z-50">
@@ -20,7 +24,6 @@ const Header = () => {
 
       <section className="w-full bg-white pt-9 pb-5 relative block">
         <div className="container-page px-6 py-10 flex items-center justify-between">
-          {/* Logo */}
           <Link to="/" className="flex items-center">
             <img
               src="https://us.shop.realmadrid.com/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2F7nqb12anqb19%2F1Ydqcs7iaU2MIVTMMJodQQ%2F4527c3f91108020dc4cfbade03553780%2Flogo-oficial-store.png&w=128&q=75"
@@ -28,23 +31,41 @@ const Header = () => {
               className="w-auto h-auto max-w-[150px]"
             />
           </Link>
-
-          {/* Search */}
           <InputSearch />
-
-          {/* Icons & Language */}
           <div className="flex items-center space-x-4 text-gray-700 relative">
             <div className="flex items-center space-x-1">
               <span>EN</span>
               <span className="text-gray-400">|</span>
               <span>USD</span>
             </div>
-            <FiUser
-              className="text-gray-700 w-5 h-5 cursor-pointer"
-              onClick={() =>
-                setModalType(modalType === 'login' ? null : 'login')
-              }
-            />
+            {!auth?.accessToken ? (
+              <FiUser
+                className="text-gray-700 w-5 h-5 cursor-pointer"
+                onClick={() =>
+                  setModalType(modalType === 'login' ? null : 'login')
+                }
+              />
+            ) : (
+              <div className="group relative">
+                <span className="text-gray-700 cursor-pointer">
+                  {auth.username}
+                </span>
+                <div
+                  className="absolute top-full left-0 
+                      opacity-0 invisible 
+                      group-hover:opacity-100 group-hover:visible
+                      transition-all duration-200
+                      bg-white shadow-md rounded-md p-2 z-10 "
+                >
+                  <button
+                    onClick={() => dispatch(logoutAuth())}
+                    className="text-red-600 whitespace-nowrap"
+                  >
+                    Đăng xuất
+                  </button>
+                </div>
+              </div>
+            )}
             <Link to="/shoppingcart">
               <FiShoppingCart className="text-gray-700 w-5 h-5 cursor-pointer" />
             </Link>
@@ -64,7 +85,6 @@ const Header = () => {
             )}
           </div>
         </div>
-
         {/* Navigation */}
         <div className="nav container-page mt-[-15px]">
           <ul className="flex justify-center items-center gap-8 text-gray-600 font-medium">

@@ -35,9 +35,9 @@ const Footer = () => {
         {/* Sign Up Section */}
         <div className=" rounded-lg p-6 space-y-4 overflow-hidden container-page">
           <img
-            src="https://media.printables.com/media/prints/837622/images/6452478_26bf5139-6bcc-4038-a869-99e8fd0c9bff_0dfa291e-a9d4-4bdb-815c-817b067b42e2/thumbs/inside/1600x1200/png/madrid.webp"
+            src="/public/realmadrid.png"
             alt=""
-            className="m-auto w-[50%]"
+            className="m-auto w-[50%] bg-white py-2 px-2 rounded"
           />
           <h3 className=" text-xl font-semibold text-center">
             Become a Madridista

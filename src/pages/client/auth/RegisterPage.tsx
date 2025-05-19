@@ -1,11 +1,16 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import PosterAuth from './components/PosterAuth';
 import Label from '../../../components/label/Label';
 import Input from '../../../components/input/Input';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import MessageForm from '../../../components/message';
-import schema from '../../../components/yup/schemaAuth';
+import schema from '../../../components/yup/schemaRegister';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { IAccount } from '../../../types/user.type';
+import { registerService } from '../../../services/auth.Service';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import Button from '../../../components/buttons/Button';
 interface RegisterPageProps {
   onClose: () => void;
   switchToLogin: () => void;
@@ -13,23 +18,30 @@ interface RegisterPageProps {
 const RegisterPage = ({ onClose, switchToLogin }: RegisterPageProps) => {
   const {
     handleSubmit,
-    formState: { errors },
-    control
+    formState: { isSubmitting, errors, isValid },
+    control,
+    reset
   } = useForm({
     resolver: yupResolver(schema),
-    mode: 'onChange'
+    mode: 'onSubmit'
   });
+  const navigate = useNavigate();
   const handleRegister: SubmitHandler<IAccount> = async data => {
-    try {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { password_confirm, ...dataRegister } = data;
-      console.log('Register data:', { ...dataRegister });
-      // Call your register API here
-    } catch (error) {
-      console.error('Error during registration:', error);
+    if (!isValid) return;
+    const { password_confirm, ...dataRegister } = data;
+    const res = await registerService(dataRegister);
+    console.log('response', res);
+    if (res.status === 400) {
+      toast.error(res.response.data.message, { position: 'top-right' });
+    } else {
+      toast.success(
+        'Đăng ký thành công. Vui lòng đăng nhập lại để xác thực !',
+        { position: 'top-right' }
+      );
+      switchToLogin();
     }
+    reset();
   };
-
   return (
     <div className="min-h-screen flex items-center justify-center fixed inset-0 z-[101] cursor-pointer ">
       <div className="w-[40%] flex border shadow-md rounded-2xl bg-gray-200 relative">
@@ -85,12 +97,14 @@ const RegisterPage = ({ onClose, switchToLogin }: RegisterPageProps) => {
               />
               <MessageForm error={errors.password_confirm?.message} />
             </div>
-            <button
+            <Button
               type="submit"
               className="w-full px-4 py-2 mt-3 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700"
+              isLoading={isSubmitting}
+              disabled={isSubmitting}
             >
               Sign Up
-            </button>
+            </Button>
           </form>
           <div className="text-sm text-center text-gray-600">
             Already have an account?{' '}

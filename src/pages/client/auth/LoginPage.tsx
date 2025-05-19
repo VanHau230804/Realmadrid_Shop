@@ -1,12 +1,17 @@
-import React from 'react';
 import PosterAuth from './components/PosterAuth';
 import Lable from '../../../components/label/Label';
 import Input from '../../../components/input/Input';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import MessageForm from '../../../components/message';
-import schema from '../../../components/yup/schemaAuth';
 import { yupResolver } from '@hookform/resolvers/yup';
+import schema from '../../../components/yup/schemaLogin';
 import { IAccount } from '../../../types/user.type';
+import { AppDispatch } from '../../../redux/store';
+import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { loginAuth } from '../../../redux/auth/thunks/authThunk';
+import { useNavigate } from 'react-router-dom';
+import Button from '../../../components/buttons/Button';
 interface LoginPageProps {
   onClose: () => void;
   switchToRegister: () => void;
@@ -14,19 +19,31 @@ interface LoginPageProps {
 const LoginPage = ({ onClose, switchToRegister }: LoginPageProps) => {
   const {
     handleSubmit,
-    formState: { errors },
-    control
+    formState: { errors, isValid, isLoading },
+    control,
+    reset
   } = useForm({
     resolver: yupResolver(schema),
-    mode: 'onChange'
+    mode: 'onSubmit'
   });
-  const handleLogin: SubmitHandler<IAccount> = async data => {
-    try {
-      const { email, password } = data;
-      console.log('Login data:', { email, password });
-      // Call your login API here
-    } catch (error) {
-      console.error('Error during login:', error);
+  const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
+  const handleLogin: SubmitHandler<IAccount> = async dataLogin => {
+    if (!isValid) return;
+    const response = await dispatch(loginAuth(dataLogin));
+    if (response.payload.accessToken) {
+      toast.success('Đăng nhập thành công !', { position: 'top-right' });
+      onClose();
+      if (response.payload.role === 'customer') {
+        navigate('/');
+      } else {
+        navigate('/dashboard');
+      }
+      reset();
+    } else {
+      toast.error('Đăng nhập không thành công !', {
+        position: 'top-right'
+      });
     }
   };
   return (
@@ -43,7 +60,11 @@ const LoginPage = ({ onClose, switchToRegister }: LoginPageProps) => {
           <h2 className="text-2xl font-bold text-center text-gray-900">
             Member Sign In
           </h2>
-          <form className="space-y-6" onSubmit={handleSubmit(handleLogin)}>
+          <form
+            action=""
+            className="space-y-6"
+            onSubmit={handleSubmit(handleLogin)}
+          >
             <div>
               <Lable htmlFor="email">Email</Lable>
               <Input type="email" name="email" className="" control={control} />
@@ -59,12 +80,14 @@ const LoginPage = ({ onClose, switchToRegister }: LoginPageProps) => {
               />
               <MessageForm error={errors.password?.message} />
             </div>
-            <button
+            <Button
               type="submit"
               className="w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700"
+              isLoading={isLoading}
+              disabled={isLoading}
             >
               Sign In
-            </button>
+            </Button>
             <div className="text-sm text-center">
               <a href="#" className="text-indigo-600 hover:text-indigo-">
                 Forget username / password?
