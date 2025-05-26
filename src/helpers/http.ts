@@ -3,9 +3,7 @@ import { logoutAuth, refreshToken } from '../redux/auth/authSlice';
 import { store } from '../redux/store';
 import axios, { AxiosInstance } from 'axios';
 import Cookies from 'universal-cookie';
-
 const cookies = new Cookies();
-
 class Http {
   private api: AxiosInstance;
   constructor() {
@@ -17,7 +15,6 @@ class Http {
       },
       withCredentials: true
     });
-
     this.api.interceptors.request.use(
       async config => {
         const accessToken = store.getState().auth.data?.accessToken;
@@ -30,7 +27,6 @@ class Http {
         return Promise.reject(error);
       }
     );
-
     this.api.interceptors.response.use(
       response => response,
       async error => {

@@ -3,7 +3,6 @@ import { createSlice } from '@reduxjs/toolkit';
 import Cookies from 'universal-cookie';
 import { loginAuth } from './thunks/authThunk';
 import { toast } from 'react-toastify';
-
 const cookies = new Cookies();
 
 const initialState: {

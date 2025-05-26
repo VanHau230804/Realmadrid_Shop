@@ -7,3 +7,6 @@ export { default as SearchIcon } from '@mui/icons-material/Search';
 export { default as DashboardIcon } from '@mui/icons-material/Dashboard';
 export { default as SettingsIcon } from '@mui/icons-material/Settings';
 export { default as NewpaperIcon } from '@mui/icons-material/Newspaper';
+export { default as AddIcon } from '@mui/icons-material/Add';
+export { default as RemoveIcon } from '@mui/icons-material/Remove';
+export { default as DeleteIcon } from '@mui/icons-material/Delete';

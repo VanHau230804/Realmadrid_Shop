@@ -30,14 +30,11 @@ const RegisterPage = ({ onClose, switchToLogin }: RegisterPageProps) => {
     if (!isValid) return;
     const { password_confirm, ...dataRegister } = data;
     const res = await registerService(dataRegister);
-    console.log('response', res);
     if (res.status === 400) {
       toast.error(res.response.data.message, { position: 'top-right' });
     } else {
-      toast.success(
-        'Đăng ký thành công. Vui lòng đăng nhập lại để xác thực !',
-        { position: 'top-right' }
-      );
+      console.log('response', res);
+      toast.success(res.message, { position: 'top-right' });
       switchToLogin();
     }
     reset();

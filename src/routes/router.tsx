@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { JSX, useEffect } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import MainLayout from '../layouts/mainLayout';
 import NotFoundPage from '../pages/client/404/NotFoundPage';
@@ -23,7 +23,7 @@ export interface IRouter {
 const clientRouter: IRouter[] = [
   { path: '/', element: HomePage, title: 'HomePage' },
   { path: '/kits', element: KitPage, title: 'KitPage' },
-  { path: '/kitdetail', element: () => <KitDetail />, title: 'KitDetail' },
+  { path: '/kit/:id', element: () => <KitDetail />, title: 'KitDetail' },
   { path: '/players', element: HomePlayer, title: 'PlayerPage' },
   { path: '/news', element: News, title: 'NewsPage' },
   { path: '/shoppingcart', element: ShoppingCart, title: 'ShoppingCart' }

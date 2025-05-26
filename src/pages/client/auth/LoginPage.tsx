@@ -31,6 +31,7 @@ const LoginPage = ({ onClose, switchToRegister }: LoginPageProps) => {
   const handleLogin: SubmitHandler<IAccount> = async dataLogin => {
     if (!isValid) return;
     const response = await dispatch(loginAuth(dataLogin));
+    console.log(response);
     if (response.payload.accessToken) {
       toast.success('Đăng nhập thành công !', { position: 'top-right' });
       onClose();
@@ -41,7 +42,7 @@ const LoginPage = ({ onClose, switchToRegister }: LoginPageProps) => {
       }
       reset();
     } else {
-      toast.error('Đăng nhập không thành công !', {
+      toast.error(response.payload.response.data.message, {
         position: 'top-right'
       });
     }

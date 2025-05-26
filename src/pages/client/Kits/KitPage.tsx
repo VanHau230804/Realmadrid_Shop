@@ -1,11 +1,13 @@
-import React from "react";
-import BannerKit from "./component/Banner";
-import Kits from "./component/Kits";
+import React from 'react';
+import BannerKit from './component/Banner';
+import KitHome from './component/KitHome';
+import KitAway from './component/KitAway';
 const KitPage = () => {
   return (
     <div className="kitpage">
       <BannerKit />
-      <Kits />
+      <KitHome />
+      <KitAway />
     </div>
   );
 };

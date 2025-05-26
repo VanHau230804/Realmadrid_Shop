@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
 import { FiUser, FiShoppingCart } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import LoginPage from '../../pages/client/auth/LoginPage';
 import RegisterPage from '../../pages/client/auth/RegisterPage';
 import InputSearch from '../../components/input/Search';
 import { logoutAuth } from '../../redux/auth/authSlice';
 import { RootState } from '../../redux/store';
+import { toast } from 'react-toastify';
 const Header = () => {
   const [modalType, setModalType] = useState<'login' | 'register' | null>(null);
   const auth = useSelector((state: RootState) => state.auth.data);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    dispatch(logoutAuth());
+    navigate('/');
+  };
   return (
     <>
       <header className="relative w-full block z-50">
@@ -21,7 +27,6 @@ const Header = () => {
         </div>
         <div className="container-page"></div>
       </header>
-
       <section className="w-full bg-white pt-9 pb-5 relative block">
         <div className="container-page px-6 py-10 flex items-center justify-between">
           <Link to="/" className="flex items-center">
@@ -58,7 +63,7 @@ const Header = () => {
                       bg-white shadow-md rounded-md p-2 z-10 "
                 >
                   <button
-                    onClick={() => dispatch(logoutAuth())}
+                    onClick={handleLogout}
                     className="text-red-600 whitespace-nowrap"
                   >
                     Đăng xuất
@@ -66,11 +71,21 @@ const Header = () => {
                 </div>
               </div>
             )}
-            <Link to="/shoppingcart">
-              <FiShoppingCart className="text-gray-700 w-5 h-5 cursor-pointer" />
-            </Link>
+            {auth?.accessToken ? (
+              <Link to="/shoppingcart">
+                <FiShoppingCart className="text-gray-700 w-5 h-5 cursor-pointer" />
+              </Link>
+            ) : (
+              <FiShoppingCart
+                className="text-gray-700 w-5 h-5 cursor-pointer"
+                onClick={() =>
+                  toast.error('Vui lòng đăng nhập để vào giỏ hàng của bạn', {
+                    position: 'top-right'
+                  })
+                }
+              />
+            )}
 
-            {/* Login / Register Modal */}
             {modalType === 'login' && (
               <LoginPage
                 onClose={() => setModalType(null)}
@@ -85,7 +100,6 @@ const Header = () => {
             )}
           </div>
         </div>
-        {/* Navigation */}
         <div className="nav container-page mt-[-15px]">
           <ul className="flex justify-center items-center gap-8 text-gray-600 font-medium">
             <Link to="/kits" className="relative group">
