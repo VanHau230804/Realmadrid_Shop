@@ -6,7 +6,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import MessageForm from '../../../components/message';
 import schema from '../../../components/yup/schemaRegister';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { IAccount } from '../../../types/user.type';
+import { IAccount } from '../../../types/account.type';
 import { registerService } from '../../../services/auth.Service';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';

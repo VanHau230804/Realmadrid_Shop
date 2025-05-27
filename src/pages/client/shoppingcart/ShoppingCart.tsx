@@ -6,17 +6,42 @@ import {
   LocationOnIcon,
   AddIcon,
   RemoveIcon,
-  DeleteIcon
+  DeleteIcon,
+  NoteAltIcon
 } from '../../../../src/components/icons/index';
+import Button from '../../../components/buttons/Button';
+
+import Input from '../../../components/input/Input';
 import { getCartByUserId, updateCart } from '../../../services/cart.Service';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { createOrder } from '../../../services/order.Service';
 import { useState, useEffect } from 'react';
 import { RootState } from '../../../redux/store';
 import { useSelector } from 'react-redux';
 import { ICartItem } from '@/types/cart.type';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import { Order } from '../../../types/order.type';
 const ShoppingCart = () => {
-  const [cartItems, setCartItems] = useState<ICartItem[]>([]);
-  console.log('cartItems', cartItems);
+  const schema = yup.object().shape({
+    fullName: yup.string().required('Full Name is required'),
+    email: yup.string().email('Invalid email').required('Email is required'),
+    phone: yup.string().required('Phone number is required'),
+    address: yup.string().required('Address is required'),
+    note: yup.string().optional()
+  });
 
+  const {
+    handleSubmit,
+    formState: { errors, isValid, isLoading },
+    control,
+    reset
+  } = useForm({
+    resolver: yupResolver(schema),
+    mode: 'onSubmit'
+  });
+
+  const [cartItems, setCartItems] = useState<ICartItem[]>([]);
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const auth = useSelector((state: RootState) => state.auth.data);
 
@@ -25,9 +50,8 @@ const ShoppingCart = () => {
       const fetchCart = async () => {
         try {
           const response = await getCartByUserId(auth._id);
-          console.log('Fetched cart items:', response);
           setCartItems(response);
-          calculateTotal(response); // Tính tổng giá trị khi nhận dữ liệu
+          calculateTotal(response);
         } catch (error) {
           console.error('Error fetching cart:', error);
         }
@@ -35,7 +59,6 @@ const ShoppingCart = () => {
       fetchCart();
     }
   }, [auth?._id]);
-
   // Tính tổng giá trị giỏ hàng
   const calculateTotal = (kit: ICartItem[]) => {
     const items = kit.flatMap(group => group.items || []);
@@ -56,9 +79,7 @@ const ShoppingCart = () => {
   ) => {
     if (newQuantity < 1) return;
     try {
-      // 1. Gọi API cập nhật database
       await updateCart(cartId, itemId, newQuantity);
-      // 2. Cập nhật UI state
       const updatedGroups = cartItems.map(group =>
         group._id === cartId
           ? {
@@ -80,6 +101,25 @@ const ShoppingCart = () => {
     const updatedItems = cartItems.filter(item => item._id !== itemId);
     setCartItems(updatedItems);
     calculateTotal(updatedItems);
+  };
+  const handleCheckout: SubmitHandler<Order[]> = async data => {
+    if (!isValid) return;
+    const orderData = {
+      userId: auth?._id,
+      items: cartItems.flatMap(group => group.items || []),
+      totalPrice,
+      ...data
+    };
+    try {
+      await createOrder(orderData);
+      console.log('Order created successfully:', orderData);
+      // Reset cart or redirect to success page
+      setCartItems([]);
+      setTotalPrice(0);
+      reset();
+    } catch (error) {
+      console.error('Checkout failed:', error);
+    }
   };
   return (
     <div className="font-sans max-w-5xl max-md:max-w-xl mx-auto bg-white py-4">
@@ -166,17 +206,21 @@ const ShoppingCart = () => {
               </h3>
               <div className="space-y-3">
                 <div className="relative flex items-center">
-                  <input
+                  <Input
                     type="text"
                     placeholder="Full Name"
                     className="px-4 py-2.5 bg-white text-gray-800 rounded-md w-full text-sm border-b focus:border-gray-800 outline-none"
+                    name="fullName"
+                    control={control}
                   />
                   <PersonIcon className="w-4 h-4 absolute right-4 text-gray-400" />
                 </div>
 
                 <div className="relative flex items-center">
-                  <input
+                  <Input
                     type="email"
+                    name="email"
+                    control={control}
                     placeholder="Email"
                     className="px-4 py-2.5 bg-white text-gray-800 rounded-md w-full text-sm border-b focus:border-gray-800 outline-none"
                   />
@@ -184,20 +228,34 @@ const ShoppingCart = () => {
                 </div>
 
                 <div className="relative flex items-center">
-                  <input
+                  <Input
                     type="number"
+                    name="phone"
+                    control={control}
                     placeholder="Phone No."
                     className="px-4 py-2.5 bg-white text-gray-800 rounded-md w-full text-sm border-b focus:border-gray-800 outline-none"
                   />
                   <CallIcon className="w-4 h-4 absolute right-4 text-gray-400" />
                 </div>
                 <div className="relative flex items-center">
-                  <input
+                  <Input
+                    name="address"
                     type="address"
+                    control={control}
                     placeholder="Address"
                     className="px-4 py-2.5 bg-white text-gray-800 rounded-md w-full text-sm border-b focus:border-gray-800 outline-none"
                   />
                   <LocationOnIcon className="w-4 h-4 absolute right-4 text-gray-400" />
+                </div>
+                <div className="relative flex items-center">
+                  <Input
+                    type="text"
+                    name="note"
+                    control={control}
+                    placeholder="Note (optional)"
+                    className="px-4 py-2.5 bg-white text-gray-800 rounded-md w-full text-sm border-b focus:border-gray-800 outline-none"
+                  />
+                  <NoteAltIcon className="w-4 h-4 absolute right-4 text-gray-400" />
                 </div>
               </div>
             </div>
@@ -207,7 +265,7 @@ const ShoppingCart = () => {
             <li className="flex flex-wrap gap-4 text-sm">
               Subtotal{' '}
               <span className="ml-auto font-bold">
-                ${(totalPrice - 6).toFixed(2)}
+                ${(totalPrice - 6).toFixed(2) || 0}
               </span>
             </li>
             <li className="flex flex-wrap gap-4 text-sm">
@@ -223,17 +281,20 @@ const ShoppingCart = () => {
           </ul>
 
           <div className="mt-6 space-y-3">
-            <button
+            <Button
               type="button"
               className="text-sm px-4 py-2.5 w-full font-semibold tracking-wide bg-gray-800 hover:bg-gray-900 text-white rounded-md"
+              isLoading={isLoading}
+              disabled={isLoading}
+              onClick={handleSubmit(handleCheckout)}
             >
               Checkout
-            </button>
+            </Button>
             <button
               type="button"
               className="text-sm px-4 py-2.5 w-full font-semibold tracking-wide bg-transparent text-gray-800 border border-gray-300 rounded-md"
             >
-              Continue Shopping{' '}
+              Continue Shopping
             </button>
           </div>
         </div>

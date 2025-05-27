@@ -1,13 +1,17 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-export interface IAccount {
-  username?: string;
+export interface User {
+  id: string;
+  fullName: string;
   email: string;
-  password: string;
-  password_confirm?: string;
-}
-export interface IUser {
-  [x: string]: any;
-  access_token: string;
-  token_type: string;
-  expires_in: number;
+  phone: string;
+  address: string;
+  role: 'admin' | 'user' | 'editor';
+  status: 'active' | 'inactive' | 'suspended';
+  createdAt: string;
+  lastLogin?: string;
+  orderStatus?: {
+    totalOrders: number;
+    completed: number;
+    processing: number;
+    cancelled: number;
+  };
 }

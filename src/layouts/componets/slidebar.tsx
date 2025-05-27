@@ -9,13 +9,13 @@ const SlideBar = () => {
       <nav className="mt-5">
         <ul>
           <li className="px-5 py-3 bg-blue-700 border-l-4 border-white">
-            <a href="#" className="flex items-center">
+            <a href="/admin" className="flex items-center">
               <Dashboard className="mr-3" />
               <span>Dashboard</span>
             </a>
           </li>
           <li className="px-5 py-3 hover:bg-blue-700 transition-colors duration-200">
-            <a href="#" className="flex items-center">
+            <a href="/admin/users" className="flex items-center">
               <FiUsers className="mr-3" />
               <span>Quản lý User</span>
             </a>

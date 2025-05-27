@@ -1,5 +1,5 @@
 // import Http from '../helpers/http';
-import { IAccount } from '@/types/user.type';
+import { IAccount } from '@/types/account.type';
 import axios from 'axios';
 export const registerService = async (newAccount: IAccount) => {
   try {

@@ -5,7 +5,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import MessageForm from '../../../components/message';
 import { yupResolver } from '@hookform/resolvers/yup';
 import schema from '../../../components/yup/schemaLogin';
-import { IAccount } from '../../../types/user.type';
+import { IAccount } from '../../../types/account.type';
 import { AppDispatch } from '../../../redux/store';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
@@ -35,10 +35,10 @@ const LoginPage = ({ onClose, switchToRegister }: LoginPageProps) => {
     if (response.payload.accessToken) {
       toast.success('Đăng nhập thành công !', { position: 'top-right' });
       onClose();
-      if (response.payload.role === 'customer') {
+      if (response.payload.role[0] === 'customer') {
         navigate('/');
       } else {
-        navigate('/dashboard');
+        navigate('/admin');
       }
       reset();
     } else {

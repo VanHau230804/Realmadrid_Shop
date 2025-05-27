@@ -11,8 +11,10 @@ import LoginPage from '../pages/client/auth/LoginPage';
 import RegisterPage from '../pages/client/auth/RegisterPage';
 import ShoppingCart from '../pages/client/shoppingcart/ShoppingCart';
 import News from '../pages/client/news/News';
+// admin
 import AdminLayout from '../layouts/adminLayout';
 import HomeAdmin from '../pages/admin/daschboard/dashboard';
+import userList from '../pages/admin/users/userList';
 export interface IRouter {
   path: string;
   element: () => JSX.Element;
@@ -30,7 +32,8 @@ const clientRouter: IRouter[] = [
 ];
 // Các route cho admin
 const adminRouter: IRouter[] = [
-  { path: '/admin', element: HomeAdmin, title: 'HomeAdmin' }
+  { path: '/admin', element: HomeAdmin, title: 'HomeAdmin' },
+  { path: '/admin/users', element: userList, title: 'UserList' }
 ];
 // Các route cho auth
 const authRouter: IRouter[] = [

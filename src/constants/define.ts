@@ -12,9 +12,11 @@ export enum GENDER {
   FEMALE = 'female',
   OTHER = 'other'
 }
-export enum ORDER_STATUS {
+export enum OrderStatus {
   PENDING = 'pending',
-  PROCESSING = 'processing',
-  COMPLETED = 'completed',
-  CANCELLED = 'cancelled'
+  CONFIRMED = 'confirmed',
+  SHIPPING = 'shipping',
+  DELIVERED = 'delivered',
+  CANCELLED = 'cancelled',
+  RETURNED = 'returned'
 }

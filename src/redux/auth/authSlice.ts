@@ -1,4 +1,4 @@
-import { IUser } from '../../types/user.type';
+import { IUser } from '../../types/account.type';
 import { createSlice } from '@reduxjs/toolkit';
 import Cookies from 'universal-cookie';
 import { loginAuth } from './thunks/authThunk';

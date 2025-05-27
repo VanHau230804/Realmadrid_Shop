@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { login } from '../../../services/auth.Service';
-import { IAccount } from '../../../types/user.type';
+import { IAccount } from '../../../types/account.type';
 
 export const loginAuth = createAsyncThunk(
   'auth/loginAuth',

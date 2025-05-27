@@ -10,3 +10,4 @@ export { default as NewpaperIcon } from '@mui/icons-material/Newspaper';
 export { default as AddIcon } from '@mui/icons-material/Add';
 export { default as RemoveIcon } from '@mui/icons-material/Remove';
 export { default as DeleteIcon } from '@mui/icons-material/Delete';
+export { default as NoteAltIcon } from '@mui/icons-material/NoteAlt';
