@@ -12,7 +12,11 @@ import {
 import Button from '../../../components/buttons/Button';
 
 import Input from '../../../components/input/Input';
-import { getCartByUserId, updateCart } from '../../../services/cart.Service';
+import {
+  getCartByUserId,
+  updateCart,
+  deleteCartById
+} from '../../../services/cart.Service';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { createOrder } from '../../../services/order.Service';
 import { useState, useEffect } from 'react';
@@ -44,6 +48,7 @@ const ShoppingCart = () => {
   const [cartItems, setCartItems] = useState<ICartItem[]>([]);
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const auth = useSelector((state: RootState) => state.auth.data);
+  console.log(cartItems);
 
   useEffect(() => {
     if (auth?._id) {
@@ -97,28 +102,38 @@ const ShoppingCart = () => {
       console.error('Update failed:', error);
     }
   };
-  const removeItem = (itemId: string | undefined) => {
-    const updatedItems = cartItems.filter(item => item._id !== itemId);
-    setCartItems(updatedItems);
-    calculateTotal(updatedItems);
+  const removeItem = async (cartId: string) => {
+    try {
+      await deleteCartById(cartId);
+      const updatedItems = cartItems.filter(group => group._id !== cartId);
+      setCartItems(updatedItems);
+      calculateTotal(updatedItems);
+    } catch (error) {
+      console.error('Failed to remove item:', error);
+    }
   };
+
   const handleCheckout: SubmitHandler<Order[]> = async data => {
     if (!isValid) return;
     const orderData = {
-      userId: auth?._id,
+      user: auth?._id,
       items: cartItems.flatMap(group => group.items || []),
       totalPrice,
-      ...data
+      shippingInfo: {
+        fullName: data.fullName.trim(),
+        phone: data.phone.trim(),
+        address: data.address.trim(),
+        email: data.email
+      },
+      note: data.note || ''
     };
     try {
       await createOrder(orderData);
-      console.log('Order created successfully:', orderData);
-      // Reset cart or redirect to success page
       setCartItems([]);
       setTotalPrice(0);
       reset();
     } catch (error) {
-      console.error('Checkout failed:', error);
+      console.error('Checkout failed:', error.response?.data || error.message);
     }
   };
   return (
@@ -161,12 +176,12 @@ const ShoppingCart = () => {
                     <button
                       type="button"
                       className="mt-6 font-semibold bg-white text-red-500 text-xs flex items-center gap-1 shrink-0"
+                      onClick={() => removeItem(group._id)}
                     >
                       <DeleteIcon className="w-4 fill-current" />
                       REMOVE
                     </button>
                   </div>
-
                   <div className="ml-auto">
                     <h4 className="text-lg max-sm:text-base font-bold text-gray-800">
                       ${item.price * (item.quantity || 1)}

@@ -5,9 +5,24 @@ import {
   getKitById,
   getKitByCategotyId
 } from '../../../../services/kit.Service';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../../redux/store';
 import { useParams } from 'react-router-dom';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { IKit, KitImage, Size } from '../../../../types/kit.type';
+import { ICartItem } from '../../../../types/cart.type';
+import { toast } from 'react-toastify';
+import { addCart } from '../../../../services/cart.Service';
+import Button from '../../../../components/buttons/Button';
+import { useNavigate } from 'react-router-dom';
 const KitsDetail: React.FC = () => {
+  const {
+    handleSubmit,
+    formState: { isValid },
+    reset
+  } = useForm({
+    mode: 'onSubmit'
+  });
   const [kit, setKit] = useState<IKit>();
   const [categoryKit, setCategory] = useState<IKit[]>([]);
   const { id } = useParams<{ id: string }>();
@@ -17,6 +32,8 @@ const KitsDetail: React.FC = () => {
   const [sizes, setSize] = useState<NodeListOf<Element>>();
   const [innerSize, setInnerSize] = useState('');
   const sizesRef = useRef<HTMLImageElement>(null);
+  const auth = useSelector((state: RootState) => state.auth.data);
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchKit = async () => {
       if (!id) return;
@@ -32,8 +49,6 @@ const KitsDetail: React.FC = () => {
       const imagesElements =
         imagesRef.current.querySelectorAll('.details-item-img');
       setImages(imagesElements);
-      console.log('imagesElements', imagesElements);
-
       if (imagesElements.length > 0) {
         imagesElements[0].classList.add('border-[rgb(189,24,28)]');
       }
@@ -56,7 +71,6 @@ const KitsDetail: React.FC = () => {
       setSize(listSize);
     }
   }, [kit?.size]);
-
   const handleActiveSize = (
     size: Size,
     event: React.MouseEvent<HTMLButtonElement>
@@ -66,6 +80,35 @@ const KitsDetail: React.FC = () => {
     );
     event.currentTarget.classList.add('text-white', '!font-bold', '!bg-second');
     setInnerSize(event.currentTarget.textContent || '');
+  };
+  const handleAddToCart: SubmitHandler<ICartItem> = async () => {
+    if (!isValid) return;
+    if (!kit || !innerSize) {
+      toast.error('Please select a size before adding to cart');
+      return;
+    }
+    console.log(kit);
+    const cartItem = {
+      items: {
+        _id: kit?._id,
+        name: kit?.name,
+        images: kit?.images,
+        quantity: 1,
+        categoryID: kit?.categoryID,
+        price: kit?.price,
+        size: { _id: kit?.size._id, label: innerSize }
+      },
+      userId: auth?._id
+    };
+    console.log(cartItem);
+    try {
+      const response = await addCart(cartItem);
+      reset();
+      toast.success('Thêm giỏ hàng công', { position: 'top-right' });
+      navigate('/shoppingcart');
+    } catch (error) {
+      console.error('Error adding item to cart:', error);
+    }
   };
   return (
     <div className="min-h-screen bg-gray-50 py-8">
@@ -112,9 +155,12 @@ const KitsDetail: React.FC = () => {
                 Personalized items will require an additional 3-4 business days.
               </p>
             </div>
-            <button className="mt-6 w-full bg-blue-700 text-white py-3 rounded-md text-lg font-semibold hover:bg-blue-800">
+            <Button
+              className="mt-6 w-full bg-blue-700 text-white py-3 rounded-md text-lg font-semibold hover:bg-blue-800"
+              onClick={handleSubmit(handleAddToCart)}
+            >
               Add to Cart
-            </button>
+            </Button>
             <div ref={imagesRef} className="mt-8 grid grid-cols-3 gap-4">
               {kit?.images.map((image, index) => (
                 <img

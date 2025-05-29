@@ -1,7 +1,6 @@
-import { OrderStatus } from '../constants/define';
 export interface Order {
   _id: string;
-  userId: string;
+  user: string;
   items: {
     _id: string;
     name: string;
@@ -9,17 +8,14 @@ export interface Order {
     quantity: number;
     categoryID: string;
     price: number;
-    size?: { _id: string; label: string };
-  }[];
-  shippingAddress?: {
+    size: { _id: string; label: string };
+  };
+  shippingInfo: {
     fullName: string;
     phone: number;
     address: string;
+    email: string;
   };
-  totalAmount: number;
-  note?: string;
-  status: OrderStatus;
-  cancelledReason?: string;
-  createdAt?: Date;
-  updatedAt?: Date;
+  totalPrice: number;
+  note: string;
 }
