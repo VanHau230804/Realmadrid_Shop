@@ -1,6 +1,63 @@
 import { FiUsers, FiBox, FiShoppingCart } from 'react-icons/fi';
-import { Dashboard, Settings, Newspaper } from '@mui/icons-material';
+import { Dashboard, Settings, Newspaper, Forum } from '@mui/icons-material';
+import { Link, useNavigate } from 'react-router-dom';
+import { logoutAuth } from '../../redux/auth/authSlice';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+const MenuDashboard = [
+  {
+    id: 1,
+    name: 'Dashboard',
+    path: '/admin',
+    icon: Dashboard
+  },
+  {
+    id: 2,
+    name: 'Quản lý người dùng',
+    path: '/admin/users',
+    icon: FiUsers
+  },
+  {
+    id: 3,
+    name: 'Quản lý đơn hàng',
+    path: '/admin/orders',
+    icon: FiShoppingCart
+  },
+  {
+    id: 4,
+    name: 'Quản lý sản phẩm',
+    path: '/admin/kits',
+    icon: FiBox
+  },
+  {
+    id: 5,
+    name: 'Quản lý danh mục',
+    path: '/admin/categories',
+    icon: Forum
+  },
+  {
+    id: 6,
+    name: 'Quản lý tin tức',
+    path: '/admin/news',
+    icon: Newspaper
+  },
+  {
+    id: 7,
+    name: 'Cài đặt',
+    path: '/admin/install',
+    icon: Settings
+  }
+];
+
 const SlideBar = () => {
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    dispatch(logoutAuth());
+    navigate('/');
+  };
+
   return (
     <div className="w-64 bg-blue-800 text-white transition-all duration-300">
       <div className="p-5 bg-blue-700 text-center">
@@ -8,43 +65,35 @@ const SlideBar = () => {
       </div>
       <nav className="mt-5">
         <ul>
-          <li className="px-5 py-3 bg-blue-700 border-l-4 border-white">
-            <a href="/admin" className="flex items-center">
-              <Dashboard className="mr-3" />
-              <span>Dashboard</span>
-            </a>
-          </li>
-          <li className="px-5 py-3 hover:bg-blue-700 transition-colors duration-200">
-            <a href="/admin/users" className="flex items-center">
-              <FiUsers className="mr-3" />
-              <span>Quản lý User</span>
-            </a>
-          </li>
-          <li className="px-5 py-3 hover:bg-blue-700 transition-colors duration-200">
-            <a href="#" className="flex items-center">
-              <FiBox className="mr-3" />
-              <span>Quản lý Sản phẩm</span>
-            </a>
-          </li>
-          <li className="px-5 py-3 hover:bg-blue-700 transition-colors duration-200">
-            <a href="#" className="flex items-center">
-              <Newspaper className="mr-3" />
-              <span>Quản lý Tin tức</span>
-            </a>
-          </li>
-          <li className="px-5 py-3 hover:bg-blue-700 transition-colors duration-200">
-            <a href="#" className="flex items-center">
-              <FiShoppingCart className="mr-3" />
-              <span>Quản lý Đơn hàng</span>
-            </a>
-          </li>
-          <li className="px-5 py-3 hover:bg-blue-700 transition-colors duration-200">
-            <a href="#" className="flex items-center">
-              <Settings className="mr-3" />
-              <span>Cài đặt</span>
-            </a>
-          </li>
+          {MenuDashboard.length > 0 &&
+            MenuDashboard.map((nav, index) => (
+              <li
+                key={index}
+                onClick={() => setSelectedIndex(index)}
+                className={`px-5 py-3  border-white ${
+                  selectedIndex === index
+                    ? 'bg-blue-700'
+                    : 'text-gray-100 hover:bg-blue-600'
+                }`}
+              >
+                <Link
+                  to={nav.path}
+                  className={`flex items-center ${
+                    location.pathname === nav.path
+                  } `}
+                >
+                  <nav.icon className="mr-3" />
+                  <span>{nav.name}</span>
+                </Link>
+              </li>
+            ))}
         </ul>
+        <button
+          onClick={handleLogout}
+          className="text-gray-100 hover:bg-blue-600 bg-blue-800 px-5 py-3 items-center  "
+        >
+          Đăng xuất
+        </button>
       </nav>
     </div>
   );

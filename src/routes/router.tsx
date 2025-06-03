@@ -15,6 +15,7 @@ import News from '../pages/client/news/News';
 import AdminLayout from '../layouts/adminLayout';
 import HomeAdmin from '../pages/admin/daschboard/dashboard';
 import userList from '../pages/admin/users/userList';
+import EditUser from '../pages/admin/users/userEdit';
 export interface IRouter {
   path: string;
   element: () => JSX.Element;
@@ -33,7 +34,8 @@ const clientRouter: IRouter[] = [
 // Các route cho admin
 const adminRouter: IRouter[] = [
   { path: '/admin', element: HomeAdmin, title: 'HomeAdmin' },
-  { path: '/admin/users', element: userList, title: 'UserList' }
+  { path: '/admin/users', element: userList, title: 'UserList' },
+  { path: '/admin/users/edit/:id', element: EditUser, title: 'EditUser' }
 ];
 // Các route cho auth
 const authRouter: IRouter[] = [

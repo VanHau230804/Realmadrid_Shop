@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import LoginPage from "../../pages/client/auth/LoginPage";
-import RegisterPage from "../pages/client/auth/RegisterPage";
+import React, { useState } from 'react';
+import LoginPage from '../../pages/client/auth/LoginPage';
+import RegisterPage from '../../pages/client/auth/RegisterPage';
 
 const AuthModal = ({ onClose }: { onClose: () => void }) => {
   const [isLogin, setIsLogin] = useState(true);

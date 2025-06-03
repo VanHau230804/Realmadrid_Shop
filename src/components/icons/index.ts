@@ -11,3 +11,6 @@ export { default as AddIcon } from '@mui/icons-material/Add';
 export { default as RemoveIcon } from '@mui/icons-material/Remove';
 export { default as DeleteIcon } from '@mui/icons-material/Delete';
 export { default as NoteAltIcon } from '@mui/icons-material/NoteAlt';
+export { default as ArrowDropDownIcon } from '@mui/icons-material/ArrowDropDown';
+export { default as ArrowDropUpIcon } from '@mui/icons-material/ArrowDropUp';
+export { default as ForumIcon } from '@mui/icons-material/Forum';

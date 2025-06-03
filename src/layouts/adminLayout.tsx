@@ -1,15 +1,32 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, Navigate } from 'react-router-dom';
 import Topbar from './componets/topbar';
 import SlideBar from './componets/slidebar';
-const AdiminLayout = () => {
+import { RootState } from '../redux/store';
+import { useSelector } from 'react-redux';
+
+const AdminLayout = () => {
+  const auth = useSelector((state: RootState) => state.auth.data);
+  if (!auth) {
+    return <Navigate to="/" replace />;
+  }
+  if (!auth.role?.includes('admin')) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <h1 className="text-2xl font-bold text-red-500">
+          Bạn không có quyền truy cập trang quản trị!
+        </h1>
+      </div>
+    );
+  }
   return (
     <main className="flex h-screen bg-gray-50">
       <SlideBar />
-      <div className="flex-1 overflow-auto ">
+      <div className="flex-1 overflow-auto">
         <Topbar />
         <Outlet />
       </div>
     </main>
   );
 };
-export default AdiminLayout;
+
+export default AdminLayout;

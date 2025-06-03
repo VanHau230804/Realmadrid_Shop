@@ -35,7 +35,7 @@ const LoginPage = ({ onClose, switchToRegister }: LoginPageProps) => {
     if (response.payload.accessToken) {
       toast.success('Đăng nhập thành công !', { position: 'top-right' });
       onClose();
-      if (response.payload.role[0] === 'customer') {
+      if (response.payload.role[0] === 'user') {
         navigate('/');
       } else {
         navigate('/admin');
