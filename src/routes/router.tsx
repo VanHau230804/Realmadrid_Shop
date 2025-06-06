@@ -16,6 +16,8 @@ import AdminLayout from '../layouts/adminLayout';
 import HomeAdmin from '../pages/admin/daschboard/dashboard';
 import userList from '../pages/admin/users/userList';
 import EditUser from '../pages/admin/users/userEdit';
+import OrderManagementPage from '../pages/admin/order/orderManagement';
+import EditOrder from '../pages/admin/order/components/OrderDetail';
 export interface IRouter {
   path: string;
   element: () => JSX.Element;
@@ -35,7 +37,13 @@ const clientRouter: IRouter[] = [
 const adminRouter: IRouter[] = [
   { path: '/admin', element: HomeAdmin, title: 'HomeAdmin' },
   { path: '/admin/users', element: userList, title: 'UserList' },
-  { path: '/admin/users/edit/:id', element: EditUser, title: 'EditUser' }
+  { path: '/admin/users/edit/:id', element: EditUser, title: 'EditUser' },
+  {
+    path: '/admin/orders',
+    element: OrderManagementPage,
+    title: 'OrderManagement'
+  },
+  { path: '/admin/orders/edit/:id', element: EditOrder, title: 'EditOrder' }
 ];
 // Các route cho auth
 const authRouter: IRouter[] = [

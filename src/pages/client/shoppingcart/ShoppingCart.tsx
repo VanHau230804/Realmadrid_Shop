@@ -15,6 +15,7 @@ import Input from '../../../components/input/Input';
 import {
   getCartByUserId,
   updateCart,
+  DeleteCartByUserId,
   deleteCartById
 } from '../../../services/cart.Service';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -34,7 +35,6 @@ const ShoppingCart = () => {
     address: yup.string().required('Address is required'),
     note: yup.string().optional()
   });
-
   const {
     handleSubmit,
     formState: { errors, isValid, isLoading },
@@ -48,13 +48,12 @@ const ShoppingCart = () => {
   const [cartItems, setCartItems] = useState<ICartItem[]>([]);
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const auth = useSelector((state: RootState) => state.auth.data);
-  console.log(cartItems);
-
   useEffect(() => {
     if (auth?._id) {
       const fetchCart = async () => {
         try {
           const response = await getCartByUserId(auth._id);
+          console.log(response);
           setCartItems(response);
           calculateTotal(response);
         } catch (error) {
@@ -112,7 +111,6 @@ const ShoppingCart = () => {
       console.error('Failed to remove item:', error);
     }
   };
-
   const handleCheckout: SubmitHandler<Order[]> = async data => {
     if (!isValid) return;
     const orderData = {
@@ -123,12 +121,13 @@ const ShoppingCart = () => {
         fullName: data.fullName.trim(),
         phone: data.phone.trim(),
         address: data.address.trim(),
-        email: data.email
+        email: data.email.trim()
       },
       note: data.note || ''
     };
     try {
       await createOrder(orderData);
+      await DeleteCartByUserId(auth?._id);
       setCartItems([]);
       setTotalPrice(0);
       reset();

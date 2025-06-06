@@ -43,6 +43,14 @@ export const updateCart = async (
     throw error;
   }
 };
+export const DeleteCartByUserId = async (userId: string) => {
+  try {
+    const response = await axios.delete(`http://localhost:8080/cart/${userId}`);
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
 export const deleteCartById = async (cartId: string) => {
   try {
     const response = await axios.delete(`http://localhost:8080/cart/${cartId}`);

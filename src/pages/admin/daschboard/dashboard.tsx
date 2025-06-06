@@ -27,7 +27,7 @@ const HomeAdmin = () => {
   if (error) {
     return <div>{'Không thể lấy dữ liệu'}</div>;
   }
-  const getStatusClass = (status: string) => {
+  const getStatusBadge = (status: string) => {
     switch (status) {
       case 'pending':
         return 'bg-yellow-100 text-yellow-800';
@@ -148,7 +148,7 @@ const HomeAdmin = () => {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span
-                        className={`px-2 py-1 text-xs rounded-full ${getStatusClass(
+                        className={`px-2 py-1 text-xs rounded-full ${getStatusBadge(
                           order.status
                         )}`}
                       >

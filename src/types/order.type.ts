@@ -1,4 +1,7 @@
+import { OrderStatus } from '../constants/define';
+
 export interface Order {
+  _id: string;
   user: string;
   items: {
     _id: string;
@@ -16,5 +19,7 @@ export interface Order {
     email: string;
   };
   totalPrice: number;
+  status: OrderStatus;
   note: string;
+  cancelReason?: string;
 }

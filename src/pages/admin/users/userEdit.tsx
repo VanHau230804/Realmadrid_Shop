@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FaArrowLeft, FaSave } from 'react-icons/fa';
-import Button from '../../../components/buttons/Button';
+import Button from '../../../components/common/Button';
 import Input from '../../../components/input/Input';
 import Select from '../../../components/select';
 import { getUserById, updateUser } from '../../../services/user.Service';
@@ -170,6 +170,7 @@ const EditUser = () => {
               type="submit"
               loading={loading}
               className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
+              icon={<FaSave className="mr-2" />}
             >
               Lưu thay đổi
             </Button>

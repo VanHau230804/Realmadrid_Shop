@@ -16,10 +16,27 @@ export const getOrderByIdUser = async (userId: string) => {
     return error;
   }
 };
+export const getOrderById = async (id: string) => {
+  try {
+    const response = await axios.get(`http://localhost:8080/order/${id}`);
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+
 export const getOrderAll = async () => {
   try {
     const response = await axios.get('http://localhost:8080/orders');
     return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+export const updateOrder = async (id: string, data: any) => {
+  try {
+    const respone = await axios.put(`http://localhost:8080/order/${id}`, data);
+    return respone.data;
   } catch (error) {
     return error;
   }

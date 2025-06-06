@@ -20,6 +20,7 @@ import { toast } from 'react-toastify';
 const UserList = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState<USER[]>();
+  const [userId, setUserId] = useState();
   const [searchTerm, setSearchTerm] = useState('');
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   useEffect(() => {
@@ -218,6 +219,7 @@ const UserList = () => {
                     </button>
                     <button
                       onClick={() => {
+                        setUserId(user?._id);
                         setShowDeleteModal(true);
                       }}
                       className="text-red-600 hover:text-red-900 p-1"
@@ -249,7 +251,7 @@ const UserList = () => {
         isOpen={showDeleteModal}
         onClose={() => setShowDeleteModal(false)}
         onConfirm={() => {
-          handleDelete(user[0]?._id);
+          handleDelete(userId);
           setShowDeleteModal(false);
         }}
         title="Xác nhận xóa người dùng"
