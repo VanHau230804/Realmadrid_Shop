@@ -12,12 +12,12 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { toast } from 'react-toastify';
 const schema = yup.object().shape({
-  fullName: yup.string().trim().required('Không được để trống'),
-  email: yup.string().required('Không được để trống'),
-  phone: yup.string().trim().required('Không được để trống'),
+  fullName: yup.string().trim().nullable(),
+  email: yup.string().nullable(),
+  phone: yup.string().trim().nullable(),
   role: yup.string().nullable().required('Vui lòng chọn role'),
   isActive: yup.string().nullable().required('Vui lòng chọn trạng thái'),
-  address: yup.string().trim().required('Không được để trống')
+  address: yup.string().trim().nullable()
 });
 const EditUser = () => {
   const { id } = useParams();

@@ -45,7 +45,9 @@ export const updateCart = async (
 };
 export const DeleteCartByUserId = async (userId: string) => {
   try {
-    const response = await axios.delete(`http://localhost:8080/cart/${userId}`);
+    const response = await axios.delete(
+      `http://localhost:8080/carts/${userId}`
+    );
     return response.data;
   } catch (error) {
     return error;

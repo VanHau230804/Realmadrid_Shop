@@ -1,15 +1,22 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { IKit } from '../../../../types/kit.type';
-import { getKits } from '../../../../services/kit.Service';
+import { IKit, Category } from '../../../../types/kit.type';
+import { getKitByCategotyId } from '../../../../services/kit.Service';
+import { getCategory } from '../../../../services/kit.Service';
 
 const KitHome = () => {
   const [kits, setKit] = useState<IKit[]>([]);
+  const [categoryName, setCategoryName] = useState<Category | null>(null);
+  console.log('Kit', kits);
   useEffect(() => {
     const fetchKits = async () => {
-      const response = await getKits();
-      console.log('Kits', response);
+      const response = await getKitByCategotyId('680e38abc61eb57b22fd7329');
+      const categoryResponse = await getCategory();
+      const categoryName = categoryResponse.find(
+        (category: Category) => category._id === '680e38abc61eb57b22fd7329'
+      );
       setKit(response);
+      setCategoryName(categoryName || null);
     };
     fetchKits();
   }, []);
@@ -30,7 +37,7 @@ const KitHome = () => {
             <div className="absolute bottom-0 p-6 sm:p-8 ">
               <span className="flex p-5 bg-white rounded-lg justify-between items-center">
                 <h2 className="block font-primary text-black font-medium  text-sm ">
-                  Third Kits 24/25
+                  {categoryName?.name}
                 </h2>
               </span>
             </div>
@@ -41,7 +48,7 @@ const KitHome = () => {
             kits.map((kit: IKit) => (
               <Link
                 key={kit._id}
-                to="#"
+                to={`/kit/${kit._id}`}
                 className="bg-white shadow-lg rounded-lg p-4 max-w-xs group overflow-hidden relative px-5 py-10"
               >
                 <div className="transition-all aspect-square duration-500 transform group-hover:scale-75 relative">

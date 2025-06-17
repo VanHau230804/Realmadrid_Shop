@@ -26,7 +26,7 @@ const MenuDashboard = [
   {
     id: 4,
     name: 'Quản lý sản phẩm',
-    path: '/admin/kits',
+    path: '/admin/products',
     icon: FiBox
   },
   {

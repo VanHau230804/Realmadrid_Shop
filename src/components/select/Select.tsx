@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import useToggle from '../../hooks/useToggle';
 import { FC } from 'react';
 import { useController } from 'react-hook-form';
@@ -34,6 +35,7 @@ const CustomSelect: FC<CustomSelectProps> = ({
   const handleSelect = (value: string | number) => {
     field.onChange(value);
     handleToggle();
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     setIsDialogOpen && setIsDialogOpen(true);
   };
 

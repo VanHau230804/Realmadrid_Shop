@@ -104,9 +104,9 @@ const ShoppingCart = () => {
   const removeItem = async (cartId: string) => {
     try {
       await deleteCartById(cartId);
-      const updatedItems = cartItems.filter(group => group._id !== cartId);
-      setCartItems(updatedItems);
-      calculateTotal(updatedItems);
+      const deleteItems = cartItems.filter(group => group._id !== cartId);
+      setCartItems(deleteItems);
+      calculateTotal(deleteItems);
     } catch (error) {
       console.error('Failed to remove item:', error);
     }

@@ -10,10 +10,10 @@ const KitAway = () => {
   console.log('Kit', kits);
   useEffect(() => {
     const fetchKits = async () => {
-      const response = await getKitByCategotyId('680e38abc61eb57b22fd7329');
+      const response = await getKitByCategotyId('681cc5ce9ac1e22353bd51a5');
       const categoryResponse = await getCategory();
       const categoryName = categoryResponse.find(
-        (category: Category) => category._id === '680e38abc61eb57b22fd7329'
+        (category: Category) => category._id === '681cc5ce9ac1e22353bd51a5'
       );
       setKit(response);
       setCategoryName(categoryName || null);

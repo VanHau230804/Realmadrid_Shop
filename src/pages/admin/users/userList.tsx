@@ -1,4 +1,3 @@
-// src/s/UserList.tsx
 import { useState, useEffect } from 'react';
 import {
   FaEdit,

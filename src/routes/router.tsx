@@ -18,6 +18,10 @@ import userList from '../pages/admin/users/userList';
 import EditUser from '../pages/admin/users/userEdit';
 import OrderManagementPage from '../pages/admin/order/orderManagement';
 import EditOrder from '../pages/admin/order/components/OrderDetail';
+import ProductManagement from '../pages/admin/product/ProductManagement';
+import EditProduct from '../pages/admin/product/components/EditProduct';
+import AddProduct from '../pages/admin/product/components/AddProduct';
+import UploadFile from '../components/modal/ModalUploadFile';
 export interface IRouter {
   path: string;
   element: () => JSX.Element;
@@ -43,7 +47,23 @@ const adminRouter: IRouter[] = [
     element: OrderManagementPage,
     title: 'OrderManagement'
   },
-  { path: '/admin/orders/edit/:id', element: EditOrder, title: 'EditOrder' }
+  { path: '/admin/orders/edit/:id', element: EditOrder, title: 'EditOrder' },
+  {
+    path: '/admin/products/',
+    element: ProductManagement,
+    title: 'ProductManagement'
+  },
+  { path: '/admin/kit/edit/:id', element: EditProduct, title: 'EditProduct' },
+  {
+    path: '/admin/addproduct',
+    element: () => <AddProduct />,
+    title: 'AddProduct'
+  },
+  {
+    path: '/admin/upload',
+    element: () => <UploadFile />,
+    title: 'UploadFile'
+  }
 ];
 // Các route cho auth
 const authRouter: IRouter[] = [
