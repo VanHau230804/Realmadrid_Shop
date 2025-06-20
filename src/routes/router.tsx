@@ -21,7 +21,9 @@ import EditOrder from '../pages/admin/order/components/OrderDetail';
 import ProductManagement from '../pages/admin/product/ProductManagement';
 import EditProduct from '../pages/admin/product/components/EditProduct';
 import AddProduct from '../pages/admin/product/components/AddProduct';
-import UploadFile from '../components/modal/ModalUploadFile';
+import NewsManagement from '../pages/admin/news/NewsManagement';
+import AddNews from '../pages/admin/news/AddNews';
+import EditNews from '../pages/admin/news/EditNews';
 export interface IRouter {
   path: string;
   element: () => JSX.Element;
@@ -60,9 +62,19 @@ const adminRouter: IRouter[] = [
     title: 'AddProduct'
   },
   {
-    path: '/admin/upload',
-    element: () => <UploadFile />,
-    title: 'UploadFile'
+    path: '/admin/news',
+    element: NewsManagement,
+    title: 'NewsManagement'
+  },
+  {
+    path: '/admin/addnews',
+    element: AddNews,
+    title: 'AddNews'
+  },
+  {
+    path: '/admin/news/:id',
+    element: EditNews,
+    title: 'EditNews'
   }
 ];
 // Các route cho auth
