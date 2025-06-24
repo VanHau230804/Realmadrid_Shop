@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 const Shopkit = () => {
   const [products, setProducts] = useState([]);
-  const [news, setNews] = useState([]);
+
   const topFour = products.slice(0, 4);
   console.log('Products:', products);
   useEffect(() => {
@@ -18,17 +18,7 @@ const Shopkit = () => {
     };
     fetchProducts();
   }, []);
-  useEffect(() => {
-    const fetchNews = async () => {
-      try {
-        const resNews = await getNews();
-        setNews(resNews);
-      } catch (error) {
-        console.error('Error fetching news:', error);
-      }
-    };
-    fetchNews();
-  }, []);
+
   return (
     <section className="relative">
       <h1 className=" text-slate-600 text-center text-7xl py-8 font-semibold ">

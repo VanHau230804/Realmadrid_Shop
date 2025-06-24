@@ -1,4 +1,4 @@
-import { FiUsers, FiBox, FiShoppingCart } from 'react-icons/fi';
+import { FiUsers, FiBox, FiShoppingCart, FiLogOut } from 'react-icons/fi';
 import { Dashboard, Settings, Newspaper, Forum } from '@mui/icons-material';
 import { Link, useNavigate } from 'react-router-dom';
 import { logoutAuth } from '../../redux/auth/authSlice';
@@ -90,8 +90,9 @@ const SlideBar = () => {
         </ul>
         <button
           onClick={handleLogout}
-          className="text-gray-100 hover:bg-blue-600 bg-blue-800 px-5 py-3 items-center  "
+          className=" hover:bg-blue-600 bg-blue-800 px-5 py-3 w-full text-left flex items-center hover:text-gray-400"
         >
+          <FiLogOut className="mr-3" />
           Đăng xuất
         </button>
       </nav>

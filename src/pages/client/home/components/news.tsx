@@ -2,7 +2,6 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { Link } from 'react-router-dom';
 import { getNews } from '../../../../services/news.Service';
 import { useEffect, useState } from 'react';
-
 const News = () => {
   const [news, setNews] = useState([]);
   const selectNew = news.slice(0, 6);

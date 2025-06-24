@@ -12,11 +12,21 @@ import { toast } from 'react-toastify';
 import ConfirmModal from '../../../components/common/ConfirmModal';
 import { IKit } from '../../../types/kit.type';
 import { useNavigate } from 'react-router-dom';
+import Pagination from '../../../components/common/Pagination';
 const ProductManagement = () => {
   const navigate = useNavigate();
   const [products, setProducts] = useState<IKit[]>([]);
   const [getId, setKitId] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [page, setPage] = useState(1);
+  const itemsPage = 5;
+  const totalItems = products.length;
+  const totalPages = Math.ceil(totalItems / itemsPage);
+  const indexOfLastItem = page * itemsPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPage;
+  const currentItems = products?.slice(indexOfFirstItem, indexOfLastItem);
+  console.log(currentItems);
+
   useEffect(() => {
     const dataKit = async () => {
       try {
@@ -57,10 +67,7 @@ const ProductManagement = () => {
     setProducts(kit => kit.filter(kit => kit._id !== id));
     toast.success('Xóa thành công ', { position: 'top-right' });
   };
-  // Lọc sản phẩm theo từ khóa tìm kiếm
-  const filteredProducts = products.filter(
-    product => product.name || product.category
-  );
+
   return (
     <div className="container mx-auto px-4 py-6">
       <div className="bg-white rounded-lg shadow p-4 mb-6 mt-16">
@@ -239,7 +246,7 @@ const ProductManagement = () => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {filteredProducts.map((product, index) => (
+            {currentItems.map((product, index) => (
               <tr key={index}>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   #{index + 1}
@@ -293,6 +300,16 @@ const ProductManagement = () => {
             ))}
           </tbody>
         </table>
+        {/* Pagination */}
+        {currentItems?.length > 0 && (
+          <div className="px-6 py-4 bUser-t bUser-gray-200">
+            <Pagination
+              currentPage={page}
+              totalPages={totalPages}
+              onPageChange={setPage}
+            />
+          </div>
+        )}
       </div>
       <ConfirmModal
         isOpen={showDeleteModal}
