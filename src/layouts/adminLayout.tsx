@@ -3,6 +3,7 @@ import Topbar from './componets/topbar';
 import SlideBar from './componets/slidebar';
 import { RootState } from '../redux/store';
 import { useSelector } from 'react-redux';
+import AdminChat from '../pages/admin/chatbox/chatBox';
 
 const AdminLayout = () => {
   const auth = useSelector((state: RootState) => state.auth.data);
@@ -24,6 +25,9 @@ const AdminLayout = () => {
       <div className="flex-1 overflow-auto">
         <Topbar />
         <Outlet />
+      </div>
+      <div className="fixed bottom-0 right-0 p-4">
+        <AdminChat />
       </div>
     </main>
   );

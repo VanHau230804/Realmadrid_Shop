@@ -27,6 +27,7 @@ const authSlice = createSlice({
     logoutAuth: state => {
       state.error = null;
       state.data = null;
+      cookies.remove('accessToken');
       cookies.remove('refreshToken');
       toast.success('Bạn đã đăng xuất thành công!', { position: 'top-right' });
     }

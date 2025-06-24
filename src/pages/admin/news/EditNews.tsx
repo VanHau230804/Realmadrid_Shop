@@ -30,6 +30,7 @@ const EditNews = () => {
   const [news, setgetNews] = useState();
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState<File[]>([]);
+
   const handleUploadSuccess = (url: File[]) => {
     if (!url) return;
     setImageUrl(url);
@@ -51,6 +52,7 @@ const EditNews = () => {
     };
     fetchNews();
   }, [id]);
+
   const handleUpdate: SubmitHandler<any> = async data => {
     if (!isValid) return;
     setLoading(true);

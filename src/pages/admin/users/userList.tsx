@@ -4,24 +4,32 @@ import {
   FaTrash,
   FaEye,
   FaPlus,
-  FaSearch,
-  FaSort
+  FaSort,
+  FaSearch
 } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../../components/common/Button';
 import Badge from '../../../components/common/Badge';
-// import Pagination from '../../../components/common/Pagination';
+import Pagination from '../../../components/common/Pagination';
 import ConfirmModal from '../../../components/common/ConfirmModal';
 import USER from '../../../types/user.type';
 import { formatDate } from '../../../helpers/convertDatetime';
 import { getUserAll, deleteUser } from '../../../services/user.Service';
 import { toast } from 'react-toastify';
+import SearchBar from '../../../components/SearchBar/searchbar';
 const UserList = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState<USER[]>();
   const [userId, setUserId] = useState();
-  const [searchTerm, setSearchTerm] = useState('');
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [current, setCurrent] = useState(1);
+  const itemsPerPage = 3;
+  const totals = Math.ceil((user?.length || 0) / itemsPerPage);
+  const indexOfLastItem = current * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = user?.slice(indexOfFirstItem, indexOfLastItem);
+
   useEffect(() => {
     const dataUsers = async () => {
       try {
@@ -60,6 +68,13 @@ const UserList = () => {
         return 'gray';
     }
   };
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newSearchTerm = event.target.value;
+    setSearchTerm(newSearchTerm);
+  };
+  // const filterUsers = user?.filter(
+  //   user => user.fullName || user.email || user.role[0] || user.isActive
+  // );
   return (
     <div className="container mx-auto px-4 py-6">
       <div className="bg-white rounded-lg shadow p-4 mb-6 mt-16">
@@ -68,16 +83,9 @@ const UserList = () => {
             Quản Lý Người Dùng
           </h1>
           <div className="relative flex-1">
-            <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-            <input
-              type="text"
-              placeholder="Tìm kiếm theo tên, email hoặc số điện thoại..."
-              value={searchTerm}
-              onChange={e => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
+            <FaSearch className="absolute left-[400px] top-1/2 transform -translate-y-1/2 text-gray-400" />
+            <SearchBar value={searchTerm} onChange={handleChange} />
           </div>
-
           <div className="flex gap-2">
             <select className="bUser rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
               <option value="">Tất cả vai trò</option>
@@ -156,7 +164,7 @@ const UserList = () => {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {user?.map(user => (
+              {currentItems?.map(user => (
                 <tr key={user?._id} className="hover:bg-gray-50">
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
@@ -234,15 +242,15 @@ const UserList = () => {
         </div>
 
         {/* Pagination */}
-        {/* {currentItems.length > 0 && (
+        {currentItems?.length > 0 && (
           <div className="px-6 py-4 bUser-t bUser-gray-200">
             <Pagination
-              current={current}
-              totals={totals}
-              onChange={setCurrent}
+              currentPage={current}
+              totalPages={totals}
+              onPageChange={setCurrent}
             />
           </div>
-        )} */}
+        )}
       </div>
 
       {/* Delete Confirmation Modal */}
